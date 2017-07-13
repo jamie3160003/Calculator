@@ -11,6 +11,7 @@ var lastCallisNumber;
 var bothErase;
 var showResultBelow = true;
 var fp;
+var lastCallisCE;
 
 function number(value){
   //Do nothing on conditions below
@@ -65,6 +66,11 @@ function process(op){
     lastCallisNumber = false;
     needToErase = true;
 
+  }else if(lastCallisCE){
+     operator = op;
+     $("#result h1, #result p").append(op);
+     lastCallisCE = false;
+
   }
 
 
@@ -72,6 +78,7 @@ function process(op){
 }
 
 function equ(){
+  console.log("at equ");
   if(lastCallisNumber){
     var ans;
     af = parseFloat($("#result h1").text());
@@ -114,12 +121,15 @@ function clearEntry(){
       if(bef == undefined) {
         reset();
       }else{
-        var temp = new RegExp(operator + "$");
+        var temp = new RegExp("\\" + operator + "\\s" + "$");
         console.log(temp);
         var text = $("#result p").text();
         text = text.replace(temp, "");
+        console.log(text);
         $("#result p").text(text);
         $("#result h1").empty();
+        lastCallisCE = true;
+        return;
 
       }
   }
